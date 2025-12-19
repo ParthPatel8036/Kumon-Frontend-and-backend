@@ -1,0 +1,6 @@
+PORT=4000
+FRONTEND_URL=http://localhost:5173
+DATABASE_URL=postgres://kumon_db_admin:uEm6qc5cENkULN5NEWGI@kumon-db.cnkyq4yao21a.ap-southeast-2.rds.amazonaws.com:5432/kumondb
+JWT_SECRET=replace_me_super_secret
+CLICK_SEND_USERNAME=your_clicksend_username
+CLICK_SEND_API_KEY=your_clicksend_api_key

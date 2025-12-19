@@ -1,0 +1,58 @@
+/* index.css — minimal base styles that won't fight the AppShell */
+
+/* Use border-box everywhere */
+*, *::before, *::after { box-sizing: border-box }
+
+/* Base typography */
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reset + let AppShell control layout/colors */
+html, body, #root { height: 100% }
+body { margin: 0 }
+
+/* Links: keep subtle; components can style their own */
+a { color: inherit; text-decoration: none }
+a:hover { text-decoration: underline }
+
+/* Native button/input focus – align with --ring if available */
+:focus-visible {
+  outline: 3px solid var(--ring, rgba(37,99,235,.35));
+  outline-offset: 2px;
+}
+
+/* Inputs (used by forms & QR camera selector) */
+.input,
+input[type="text"], input[type="email"], input[type="password"], input[type="tel"],
+select, textarea {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border, rgba(255,255,255,.12));
+  background: rgba(255,255,255,.04);
+  color: var(--text, #e5e7eb);
+  font: inherit;
+}
+textarea.input, textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+.input::placeholder, input::placeholder, textarea::placeholder {
+  color: rgba(255,255,255,.45);
+}
+.input:disabled, input:disabled, select:disabled, textarea:disabled {
+  opacity: .6; cursor: not-allowed;
+}
+
+/* Legacy helpers some pages might still use */
+.container { padding: 0 }       /* AppShell already provides padded .content */
+.space { display:block; height: 8px }  /* for older layouts that use <div class="space" /> */

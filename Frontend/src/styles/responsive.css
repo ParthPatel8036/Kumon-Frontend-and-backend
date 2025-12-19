@@ -1,0 +1,170 @@
+/* responsive.css
+   NOTE: Load app-shell.css BEFORE this file so CSS variables like
+   --brand, --border, --muted, --shadow are available. */
+
+/* 1) Fluid typography + smooth scrolling */
+html{
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+@media (max-width: 480px){ html{ font-size: 15px } }
+@media (max-width: 360px){ html{ font-size: 14px } }
+
+/* 2) Media elements & images behave responsively */
+img, video, canvas, svg{ max-width:100%; height:auto }
+
+/* 3) Forms scale to width */
+form, .form{
+  display:grid; gap:12px;
+}
+input, select, textarea{
+  width:100%;
+}
+.form-row{
+  display:grid; gap:12px; grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 640px){
+  .form-row{ grid-template-columns: 1fr }
+}
+
+/* 4) Button clusters wrap on small screens */
+.actions{
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+}
+.actions .spacer{ flex:1 }
+
+/* 5) Table → stacked cards on mobile: add class="responsive-table" on your tables */
+.responsive-table{
+  width:100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* stable column widths */
+}
+/* Desktop/tablet: clear column + row separators */
+.responsive-table th,
+.responsive-table td{
+  padding:12px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.responsive-table th:not(:last-child),
+.responsive-table td:not(:last-child){
+  border-right: 1px solid var(--border);      /* vertical separators */
+}
+.responsive-table tbody tr:nth-child(odd){
+  background: rgba(2,6,23,.02);               /* soft zebra */
+}
+.responsive-table tbody tr:hover{
+  background: rgba(37,99,235,.06);
+}
+
+/* Mobile: convert each row to a card with strong outline + inner dividers */
+@media (max-width: 768px){
+  .responsive-table thead{ display:none }
+  .responsive-table tbody tr{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:8px 12px;
+    padding:12px;
+    margin-bottom:12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius:12px;
+    box-shadow: var(--shadow);
+  }
+  .responsive-table tbody td{
+    border:0; padding:4px 0;
+  }
+  .responsive-table tbody td::before{
+    content: attr(data-label);
+    display:block;
+    margin-bottom:2px;
+    font-size:.85rem; color: var(--muted);
+  }
+  /* Add dashed separators after the first "row" of the grid */
+  .responsive-table tbody td:nth-child(n+3){
+    border-top: 1px dashed var(--border);
+    padding-top:8px;
+    margin-top:2px;
+  }
+}
+/* Extra small phones: single-column card layout with dividers between every field */
+@media (max-width: 400px){
+  .responsive-table tbody tr{ grid-template-columns: 1fr }
+  .responsive-table tbody td:nth-child(n+2){
+    border-top: 1px dashed var(--border);
+    padding-top:8px;
+    margin-top:2px;
+  }
+}
+/* Long text wrapping in cells */
+.responsive-table td{
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* 6) Scan page helpers (optional classes you can use in Scan.jsx) */
+.scan-wrap{
+  display:grid; gap:12px;
+}
+.scan-video{
+  width:100%; aspect-ratio: 1 / 1; border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,.08);
+}
+.scan-actions{
+  position: sticky; bottom: 12px; display:flex; gap:10px; flex-wrap:wrap;
+  background: linear-gradient(to top, rgba(15,23,42,.9), rgba(15,23,42,.2));
+  padding:12px; border:1px solid rgba(255,255,255,.08); border-radius:14px; backdrop-filter: blur(8px);
+}
+
+/* 7) Cards & sections */
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px; padding:14px;
+}
+.section-title{
+  font-weight:700; margin: 4px 0 10px;
+}
+
+/* 8) Headings & text */
+.h1{ font-size: clamp(1.25rem, 1.2vw + 1rem, 1.75rem) }
+.muted{ color: var(--muted) }
+.small{ font-size: .875rem }
+
+/* 9) Buttons (simple, modern) */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  padding:10px 14px; border-radius:12px; text-decoration:none;
+  border:1px solid var(--border); background: var(--brand); color:#fff;
+  box-shadow: var(--shadow); transition: filter .15s, transform .02s;
+}
+.btn:hover{ filter: brightness(1.05) }
+.btn:active{ transform: translateY(1px) }
+.btn.btn-outline{
+  background: transparent; color: var(--brand); border-color: rgba(37,99,235,.5);
+}
+
+/* 10) KPI tiles */
+.kpi-grid{
+  display:grid; gap:12px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.kpi .kpi-value{
+  font-weight:800; line-height:1.1;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+/* 11) Table polish (works with existing .responsive-table rules) */
+.responsive-table thead th{
+  padding:12px 14px;
+  font-size:.8rem; color: var(--muted);
+  text-align:left; text-transform:uppercase; letter-spacing:.02em;
+  background: linear-gradient(180deg, rgba(2,6,23,.02), rgba(2,6,23,.01));
+  border-bottom: 2px solid var(--border);
+}
+.responsive-table tbody td{ padding:12px 14px }
+
+/* 12) Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important }
+  html{ scroll-behavior: auto }
+}

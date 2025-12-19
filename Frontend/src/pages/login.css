@@ -1,0 +1,145 @@
+/* src/pages/login.css */
+
+/* Theme tokens for easy tweaking */
+:root {
+  --login-bg: #91c8ff;
+  --login-glass: rgba(255, 255, 255, 0.9);
+  --login-glass-2: rgba(255, 255, 255, 0.86);
+  --login-border: rgba(255, 255, 255, 0.55);
+  --login-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  --login-focus: 0 0 0 3px rgba(145, 200, 255, 0.45), 0 0 0 1px rgba(0,0,0,0.05) inset;
+  --login-text-muted: rgba(0, 0, 0, 0.6);
+}
+
+/* Preferred scope if you add className="login-page" to the outer <div> */
+.login-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: var(--login-bg);
+  background-image:
+    radial-gradient(60% 100% at 80% 10%, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 70%),
+    radial-gradient(60% 80%  at 10% 90%, rgba(255,255,255,.25) 0%, rgba(255,255,255,0) 70%);
+}
+
+/* Fallback scoping when the page doesn't have .login-page */
+body:has(#root > div > form.card) {
+  background: var(--login-bg);
+  background-image:
+    radial-gradient(60% 100% at 80% 10%, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 70%),
+    radial-gradient(60% 80%  at 10% 90%, rgba(255,255,255,.25) 0%, rgba(255,255,255,0) 70%);
+}
+
+/* Card styling (use .login-card on the form if you wish; fallback targets form.card) */
+.login-card,
+body:has(#root > div > form.card) form.card {
+  width: min(420px, 100%);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid var(--login-border);
+  background: linear-gradient(180deg, var(--login-glass), var(--login-glass-2));
+  backdrop-filter: blur(8px);
+  box-shadow: var(--login-shadow);
+  animation: login-card-in 420ms cubic-bezier(.2,.7,.2,1) both;
+}
+
+@keyframes login-card-in {
+  from { transform: translateY(6px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+/* Brand logo */
+.login-logo,
+body:has(#root > div > form.card) form.card img[alt*="Kumon"] {
+  width: 180px;
+  max-width: 70%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin-inline: auto;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.12));
+}
+
+/* Headings & muted text inside the card */
+.login-card .muted,
+body:has(#root > div > form.card) form.card .muted {
+  color: var(--login-text-muted);
+}
+
+/* Inputs */
+.login-card .input,
+body:has(#root > div > form.card) form.card .input {
+  height: 44px;
+  border-radius: 10px;
+  transition: box-shadow 160ms ease, border-color 160ms ease, transform 120ms ease;
+}
+
+.login-card .input:focus,
+body:has(#root > div > form.card) form.card .input:focus {
+  outline: none;
+  box-shadow: var(--login-focus);
+  transform: translateY(-1px);
+}
+
+.login-card textarea.input {
+  min-height: 120px;
+}
+
+/* Buttons */
+.login-card .btn,
+body:has(#root > div > form.card) form.card .btn {
+  height: 44px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: transform 120ms ease, box-shadow 200ms ease, background-color 200ms ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.login-card .btn:hover,
+body:has(#root > div > form.card) form.card .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(0,0,0,.12);
+}
+
+.login-card .btn:active,
+body:has(#root > div > form.card) form.card .btn:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+/* The little "Show" button in the password field if using .btn.btn-outline */
+.login-card .btn.btn-outline,
+body:has(#root > div > form.card) form.card .btn.btn-outline {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(6px);
+}
+
+/* Fine-tune labels */
+.login-card label.small.muted,
+body:has(#root > div > form.card) form.card label.small.muted {
+  font-weight: 600;
+}
+
+/* Mobile tweaks */
+@media (max-width: 480px) {
+  .login-card,
+  body:has(#root > div > form.card) form.card {
+    border-radius: 14px;
+    padding: 16px;
+  }
+
+  .login-logo,
+  body:has(#root > div > form.card) form.card img[alt*="Kumon"] {
+    width: 160px;
+    max-width: 80%;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .login-card,
+  body:has(#root > div > form.card) form.card {
+    animation: none;
+  }
+}
